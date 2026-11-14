@@ -1,0 +1,54 @@
+[package]
+name = "jaca-reminder"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "jaca-reminder"
+path = "src/main.rs"
+
+[dependencies]
+# Native window and immediate-mode UI (same as Jaca Read Fast).
+eframe = { version = "0.37", features = ["persistence"] }
+# Dates, times and the local time zone.
+chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
+# Saving the reminders and the history as JSON.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Reads the picture of a popup (the same version eframe already uses).
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp"] }
+# Reads MP3, OGG, FLAC, AAC/M4A and WAV sounds, to turn them into WAV (the only format Windows plays here).
+symphonia = { version = "0.5", default-features = false, features = ["mp3", "ogg", "vorbis", "flac", "aac", "isomp4", "wav", "pcm"] }
+# Native "choose a file" dialog (for a custom sound).
+rfd = "0.17"
+# Gives the popup access to its window handle (to cut the rounded corners).
+raw-window-handle = "0.6"
+# Tray icon with a menu.
+tray-icon = { version = "0.21", default-features = false }
+# Windows API: tray message loop, sound, window shape and the "start with Windows" registry key.
+windows-sys = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_Media_Audio",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Registry",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[build-dependencies]
+winresource = "0.1"
+
+# egui is slow without optimization and the animations look choppy: optimize the dependencies
+# even in the debug build.
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
+
+# The version that goes in the installer: smaller and faster.
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

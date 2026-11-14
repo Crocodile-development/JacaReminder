@@ -1,0 +1,4 @@
+# Links the C runtime into jaca-reminder.exe, so the program runs on a clean Windows without the
+# "Microsoft Visual C++ Redistributable" installed. The installer can then be one self-contained file.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
