@@ -50,15 +50,17 @@ Updating is the same: run the new installer over the old one. Your reminders are
 
 ### Build the installer
 
-The installer is made with [Inno Setup 6](https://jrsoftware.org/isinfo.php). Build the release first,
-then compile the script:
+The installer is made with [Inno Setup 6](https://jrsoftware.org/isinfo.php). One script builds the
+release exe and then the installer, with the version that is in `Cargo.toml`:
 
 ```powershell
-cargo build --release
-ISCC.exe installer\jaca-reminder.iss
+powershell -ExecutionPolicy Bypass -File installer\build-release.ps1
 ```
 
-The setup file is written to `dist\`. To name another version: `ISCC.exe /DAppVersion=1.2.3 installer\jaca-reminder.iss`.
+The setup file is written to `dist\`. The script builds the exe with the paths of your computer
+left out of it (otherwise Rust writes `C:\Users\<you>\.cargo\...` into the error messages of the
+exe, and the installer would carry your user name). Do not build the release with a plain
+`cargo build --release` for a version that is published.
 
 ### From source
 
@@ -145,7 +147,7 @@ src/
     i18n.rs          English and Portuguese
 assets/              logo (png, ico) and the water drop sound
 docs/screenshots/    the pictures of this README (made with showcase reminders, never real ones)
-installer/           Inno Setup script
+installer/           Inno Setup script and build-release.ps1 (builds the exe and the installer)
 build.rs             puts the logo inside jaca-reminder.exe
 .cargo/config.toml   links the C runtime into the exe
 ```
