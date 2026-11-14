@@ -10,6 +10,14 @@
   A reminder can also be a task: its popup stays until you complete it, and comes back when you snooze it.
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/main.png" alt="The Jaca Reminder dashboard with nine showcase reminders, one of them a task that was snoozed until 21:30">
+</p>
+
+| Editor | Popup design | Task popup |
+|---|---|---|
+| ![The editor of a task: type, snooze time and schedule](docs/screenshots/editor.png) | ![The popup tab: colors, position, rounded corners, image and sound](docs/screenshots/popup-design.png) | ![A task popup with the Snooze and Complete buttons, over the dashboard](docs/screenshots/task-popup.png) |
+
 | Type | What happens when it fires |
 |---|---|
 | **Alert** | The popup slides in, plays its sound, and slides out by itself after the time you chose (or when clicked) |
@@ -136,6 +144,7 @@ src/
     storage.rs       the files in %APPDATA%\JacaReminder
     i18n.rs          English and Portuguese
 assets/              logo (png, ico) and the water drop sound
+docs/screenshots/    the pictures of this README (made with showcase reminders, never real ones)
 installer/           Inno Setup script
 build.rs             puts the logo inside jaca-reminder.exe
 .cargo/config.toml   links the C runtime into the exe
